@@ -4,7 +4,6 @@ import java.util.Objects;
 import javax.crypto.spec.SecretKeySpec;
 
 import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
