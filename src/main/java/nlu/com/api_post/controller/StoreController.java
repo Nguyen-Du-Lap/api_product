@@ -17,7 +17,7 @@ import nlu.com.api_post.model.dto.response.StoreResponse;
 import nlu.com.api_post.service.StoreService;
 
 @RestController
-@RequestMapping("/api/stores")
+@RequestMapping("/stores")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Slf4j

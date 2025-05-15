@@ -25,7 +25,7 @@ public class StoreMapper {
                 .name(request.getName())
                 .description(request.getDescription())
                 .logo(request.getLogo())
-                .status(StoreStatus.PENDING)
+                .status(StoreStatus.pending)
                 .createdAt(LocalDateTime.now())
                 .user(user)
                 .build();
