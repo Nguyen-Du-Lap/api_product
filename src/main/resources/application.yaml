@@ -18,3 +18,26 @@ jwt:
   signerKey: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
   valid-duration: 3600 # in second
   refreshable-duration: 36000 # in seconds
+  
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    docExpansion: none
+  info:
+    title: API Product Spring Boot
+    description: RESTful API for Product management system
+    version: 1.0.0
+    contact:
+      name: DevNguyen
+      email: 20130302@st.hcmuaf.edu.vn
+      url: https://yourwebsite.com
+    license:
+      name: Apache 2.0
+      url: http://www.apache.org/licenses/LICENSE-2.0.html
+  servers:
+    - url: /
+      description: Default Server URL
