@@ -22,6 +22,8 @@ public class Category {
     String id;
     
     String name;
+
+    String description;
     
     @Column(name = "created_at")
     LocalDateTime createdAt;
