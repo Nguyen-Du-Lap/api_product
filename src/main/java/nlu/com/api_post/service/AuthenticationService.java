@@ -14,6 +14,7 @@ import nlu.com.api_post.exception.AppException;
 import nlu.com.api_post.exception.ErrorCode;
 import nlu.com.api_post.model.dto.request.AuthenticationRequest;
 import nlu.com.api_post.model.dto.request.IntrospectRequest;
+import nlu.com.api_post.model.dto.request.LoginRequest;
 import nlu.com.api_post.model.dto.request.LogoutRequest;
 import nlu.com.api_post.model.dto.request.RefreshRequest;
 import nlu.com.api_post.model.dto.response.AuthenticationResponse;
@@ -40,6 +41,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationService {
+
+    RecaptchaService recaptchaService;
+
     UserRepository userRepository;
 
     InvalidatedTokenRepository invalidatedTokenRepository;
@@ -57,6 +61,27 @@ public class AuthenticationService {
     protected long refreshableDuration;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        var user = userRepository
+                .findByUsername(request.getUsername())
+                .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
+        boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
+
+        if(!authenticated) throw new AppException(ErrorCode.UNAUTHENTICATED);
+
+        var token = generateToken(user);
+
+        return AuthenticationResponse.builder()
+                .token(token)
+                .authenticated(true)
+                .build();
+    }
+
+    public AuthenticationResponse login(LoginRequest request) {
+        if (!recaptchaService.verifyToken(request.getRecaptchaToken())) {
+            throw new AppException(ErrorCode.RECAPTCHA_INVALID);
+        }
+
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         var user = userRepository
                 .findByUsername(request.getUsername())

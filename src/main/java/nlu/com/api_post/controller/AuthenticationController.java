@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import nlu.com.api_post.model.dto.request.AuthenticationRequest;
 import nlu.com.api_post.model.dto.request.IntrospectRequest;
+import nlu.com.api_post.model.dto.request.LoginRequest;
 import nlu.com.api_post.model.dto.request.LogoutRequest;
 import nlu.com.api_post.model.dto.request.RefreshRequest;
 import nlu.com.api_post.model.dto.response.ApiResponse;
@@ -55,5 +56,14 @@ public class AuthenticationController {
         authenticationService.logout(request);
         return ApiResponse.<Void>builder().build();
     }
+
+    @PostMapping("/login")
+    ApiResponse<AuthenticationResponse> login(@RequestBody LoginRequest request) {
+        var result = authenticationService.login(request);
+        return ApiResponse.<AuthenticationResponse>builder()
+                .result(result)
+                .build();
+    }
+
 
 }

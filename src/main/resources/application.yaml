@@ -41,3 +41,7 @@ springdoc:
   servers:
     - url: /
       description: Default Server URL
+
+recaptcha:
+  secret: 6LdpszsrAAAAACpPHfRCf-O1aVfn78DJmxLBDqp_
+  url: https://www.google.com/recaptcha/api/siteverify
