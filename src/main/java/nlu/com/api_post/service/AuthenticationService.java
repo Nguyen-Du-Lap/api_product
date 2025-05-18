@@ -19,7 +19,9 @@ import nlu.com.api_post.model.dto.request.LogoutRequest;
 import nlu.com.api_post.model.dto.request.RefreshRequest;
 import nlu.com.api_post.model.dto.response.AuthenticationResponse;
 import nlu.com.api_post.model.dto.response.IntrospectResponse;
+import nlu.com.api_post.model.dto.response.LoginResponse;
 import nlu.com.api_post.model.entity.InvalidatedToken;
+import nlu.com.api_post.model.entity.Role;
 import nlu.com.api_post.model.entity.User;
 import nlu.com.api_post.repository.InvalidatedTokenRepository;
 import nlu.com.api_post.repository.UserRepository;
@@ -35,6 +37,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -77,7 +80,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
         if (!recaptchaService.verifyToken(request.getRecaptchaToken())) {
             throw new AppException(ErrorCode.RECAPTCHA_INVALID);
         }
@@ -92,9 +95,12 @@ public class AuthenticationService {
 
         var token = generateToken(user);
 
-        return AuthenticationResponse.builder()
+        return LoginResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
                 .token(token)
                 .authenticated(true)
+                .roles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()))
                 .build();
     }
 

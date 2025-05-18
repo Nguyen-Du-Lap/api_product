@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import nlu.com.api_post.model.dto.request.AuthenticationRequest;
 import nlu.com.api_post.model.dto.request.IntrospectRequest;
 import nlu.com.api_post.model.dto.request.LoginRequest;
@@ -13,6 +14,7 @@ import nlu.com.api_post.model.dto.request.RefreshRequest;
 import nlu.com.api_post.model.dto.response.ApiResponse;
 import nlu.com.api_post.model.dto.response.AuthenticationResponse;
 import nlu.com.api_post.model.dto.response.IntrospectResponse;
+import nlu.com.api_post.model.dto.response.LoginResponse;
 import nlu.com.api_post.service.AuthenticationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,7 @@ import java.text.ParseException;
 @RequestMapping("/auth")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationController {
     AuthenticationService authenticationService;
 
@@ -58,9 +61,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    ApiResponse<AuthenticationResponse> login(@RequestBody LoginRequest request) {
+    ApiResponse<LoginResponse> login(@RequestBody LoginRequest request) {
+        log.info("Login request: {}", request);
         var result = authenticationService.login(request);
-        return ApiResponse.<AuthenticationResponse>builder()
+        return ApiResponse.<LoginResponse>builder()
                 .result(result)
                 .build();
     }

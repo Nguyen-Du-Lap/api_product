@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Data
 public class LoginRequest {
     @Size(min = 4, message = "USERNAME_INVALID")
     String username;
