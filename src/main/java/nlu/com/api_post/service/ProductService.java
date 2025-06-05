@@ -21,6 +21,8 @@ public interface ProductService {
     
     Page<ProductResponse> getProductsByBrandId(String brandId, Pageable pageable);
     
+    Page<ProductResponse> searchProducts(String search, Pageable pageable);
+    
     ProductResponse createProduct(ProductCreationRequest request);
     
     ProductResponse updateProduct(String id, ProductUpdateRequest request);

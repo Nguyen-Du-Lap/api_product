@@ -10,33 +10,29 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import nlu.com.api_post.model.dto.response.RecaptchaResponse;
+import nlu.com.api_post.repository.httpClient.RecaptchaClient;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RecaptchaService {
-    @Value("${recaptcha.secret}")
-    private String recaptchaSecret;
 
-    @Value("${recaptcha.url}")
-    private String recaptchaUrl;
+    @NonFinal
+    @Value("${recaptcha.secret}")
+    String recaptchaSecret;
+
+    RecaptchaClient recaptchaClient;
 
     public boolean verifyToken(String token) {
-        RestTemplate restTemplate = new RestTemplate();
+        RecaptchaResponse response = recaptchaClient.verify(recaptchaSecret, token);
     
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-    
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("secret", recaptchaSecret);
-        map.add("response", token);
-    
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-    
-        ResponseEntity<RecaptchaResponse> response =
-            restTemplate.postForEntity(recaptchaUrl, request, RecaptchaResponse.class);
-    
-        return response.getBody() != null && response.getBody().isSuccess();
+        return response.success();
     }
 }

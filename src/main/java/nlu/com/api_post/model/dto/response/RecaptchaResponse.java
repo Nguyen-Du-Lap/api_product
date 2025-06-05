@@ -1,17 +1,14 @@
 package nlu.com.api_post.model.dto.response;
 
-import lombok.Data;
-
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-import lombok.Builder;
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public record RecaptchaResponse(
+		boolean success, 
+		String challengeTs, 
+		String hostname, List<String> errorCodes) {
 
-@Data
-@Builder
-public class RecaptchaResponse {
-    private boolean success;
-    @JsonProperty("error-codes")
-    private List<String> errorCodes;
-} 
+}

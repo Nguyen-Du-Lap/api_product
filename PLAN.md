@@ -13,6 +13,7 @@
 - GET /api/products/store/{storeId} - Get products by store ID
 - GET /api/products/category/{categoryId} - Get products by category ID
 - GET /api/products/brand/{brandId} - Get products by brand ID
+- GET /api/products/{search} - Search products by name, description, or other attributes
 - POST /api/products - Create a new product
 - PUT /api/products/{id} - Update product details
 - PATCH /api/products/{id}/stock - Update product stock

@@ -68,6 +68,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<ProductResponse> searchProducts(String search, Pageable pageable) {
+        return productRepository.searchProducts(search, pageable)
+                .map(productMapper::toResponse);
+    }
+
+    @Override
     @Transactional
     public ProductResponse createProduct(ProductCreationRequest request) {
         Store store = storeRepository.findById(String.valueOf(request.getStoreId()))

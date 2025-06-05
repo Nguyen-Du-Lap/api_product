@@ -86,6 +86,17 @@ public class ProductController {
                 .build();
     }
 
+    @GetMapping("/search/{search}")
+    public ApiResponse<Page<ProductResponse>> searchProducts(
+            @PathVariable String search,
+            @PageableDefault(page = 0, size = 10, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<ProductResponse> products = productService.searchProducts(search, pageable);
+        return ApiResponse.<Page<ProductResponse>>builder()
+                .result(products)
+                .message("Products search results")
+                .build();
+    }
+
     @PostMapping
     public ApiResponse<ProductResponse> createProduct(@RequestBody @Valid ProductCreationRequest request) {
         ProductResponse createdProduct = productService.createProduct(request);
