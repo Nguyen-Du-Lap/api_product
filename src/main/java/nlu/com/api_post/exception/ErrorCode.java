@@ -29,7 +29,8 @@ public enum ErrorCode {
     POST_NOT_EXISTED(1020, "Post not found", HttpStatus.NOT_FOUND),
     PARAMETER_NOT_CORRECT(1021, "Invalid parameter", HttpStatus.BAD_REQUEST),
     CATEGORY_NOT_FOUND(1022, "Category not found", HttpStatus.NOT_FOUND),
-    RECAPTCHA_INVALID(1023, "Recaptcha validation failed", HttpStatus.BAD_REQUEST);
+    RECAPTCHA_INVALID(1023, "Recaptcha validation failed", HttpStatus.BAD_REQUEST),
+    BRAND_NOT_FOUND(1024, "Brand not found", HttpStatus.NOT_FOUND);
 
     private final int code;
     private final String message;

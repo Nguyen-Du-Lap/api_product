@@ -32,6 +32,7 @@ public class SecurityConfig {
                         "/swagger-ui.html",
                         "/categories/**",
                         "/products/**",
+                        "/products/search/**"
         };
 
         @Autowired

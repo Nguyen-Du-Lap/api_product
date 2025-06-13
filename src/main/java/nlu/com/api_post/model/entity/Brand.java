@@ -22,10 +22,11 @@ public class Brand {
     String id;
     
     String name;
+    String description;
     
     @Column(name = "created_at")
     LocalDateTime createdAt;
     
     @OneToMany(mappedBy = "brand")
     Set<Product> products;
-} 
+}
